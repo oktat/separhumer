@@ -1,6 +1,6 @@
-# sip expressapi sabon
+# Separated humer REST API
 
-Express based REST API sablon
+Express based REST API for separated humer.
 
 ## Install
 
