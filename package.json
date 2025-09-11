@@ -1,7 +1,7 @@
 {
-  "name": "humer",
+  "name": "separhumer",
   "version": "0.0.1",
-  "description": "Express API with simple Sequelize",
+  "description": "Separated humer REST API",
   "main": "index.js",
   "scripts": {
     "test": "mocha",
