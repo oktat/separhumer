@@ -106,6 +106,50 @@ The keys in the JSON file and the field names in the CSV file must match the mod
 
 If the CSV file contains quotation marks, they are automatically removed.
 
+## Endpoints
+
+### User handling
+
+| Endpoint | Method | Auth | CRUD | Description |
+|-|-|-|-|-|
+| /api/login | POST  | no | create | login user |
+| /api/users | GET | yes | read | get all users |
+| /api/users | POST | yes | create | create user |
+| /api/users/:id | GET | yes | read | get user |
+| /api/users/:id | PATCH | yes | update | update user data |
+| /api/users/:id/password | PATCH | yes | update | update password |
+| /api/users/:id | DELETE | yes | delete | delete user |
+
+### Employee handling
+
+| Endpoint | Method | Auth | CRUD | Description |
+|-|-|-|-|-|
+| /api/employees | GET | yes | read | get all employees |
+| /api/employees | POST | yes | create | create employee |
+| /api/employees/:id | GET | yes | read | get employee |
+| /api/employees/:id | PUT | yes | update | update employee data |
+| /api/employees/:id | DELETE | yes | delete | delete employee |
+
+### Rank handling
+
+| Endpoint | Method | Auth | CRUD | Description |
+|-|-|-|-|-|
+| /api/ranks | GET | yes | read | get all ranks |
+| /api/ranks | POST | yes | create | create rank |
+| /api/ranks/:id | GET | yes | read | get rank |
+| /api/ranks/:id | PUT | yes | update | update rank data |
+| /api/ranks/:id | DELETE | yes | delete | delete rank |
+
+### Project handling
+
+| Endpoint | Method | Auth | CRUD | Description |
+|-|-|-|-|-|
+| /api/projects | GET | yes | read | get all projects |
+| /api/projects | POST | yes | create | create project |
+| /api/projects/:id | GET | yes | read | get project |
+| /api/projects/:id | PUT | yes | update | update project data |
+| /api/projects/:id | DELETE | yes | delete | delete project |
+
 ## Licence
 
 May be freely distributed under the MIT license.

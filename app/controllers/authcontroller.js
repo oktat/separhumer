@@ -33,7 +33,7 @@ const AuthController = {
                 res.status(400)
             }else {
                 res.status(500)
-            }            
+            }
             await res.json({
                 success: false,
                 message: 'Error! User creation failed!',

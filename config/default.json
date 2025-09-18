@@ -10,6 +10,6 @@
         "name": "",
         "user": "",
         "pass": "",
-        "path": ":memory:"
+        "path": "database.sqlite"
     }
 }

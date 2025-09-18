@@ -5,14 +5,15 @@ import AuthController from '../controllers/authcontroller.js';
 import UserController from '../controllers/usercontroller.js';
 import verifyToken from '../middlewares/authjwt.js';
  
-router.post('/register', AuthController.register)
+// router.post('/register', AuthController.register)
 router.post('/login', AuthController.login)
-router.get('/users', [verifyToken], UserController.index)
+router.get('/users', UserController.index)
 
-router.get('/users/:id', [verifyToken], UserController.show)
-router.post('/users', [verifyToken], UserController.create)
-router.put('/users/:id', [verifyToken], UserController.update)
-router.delete('/users/:id', [verifyToken], UserController.destroy)
+router.get('/users/:id', UserController.show)
+router.post('/users', UserController.create)
+router.patch('/users/:id', UserController.update)
+router.patch('/users/:id/password', UserController.updatePassword)
+router.delete('/users/:id', UserController.destroy)
 
 router.get('/ranks', [verifyToken], UserController.index)
 router.get('/ranks/:id', [verifyToken], UserController.show)
