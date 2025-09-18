@@ -1,6 +1,6 @@
 {
   "name": "separhumer",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Separated humer REST API",
   "main": "index.js",
   "scripts": {
