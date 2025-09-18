@@ -129,6 +129,8 @@ If the CSV file contains quotation marks, they are automatically removed.
 | /api/employees/:id | GET | yes | read | get employee |
 | /api/employees/:id | PUT | yes | update | update employee data |
 | /api/employees/:id | DELETE | yes | delete | delete employee |
+| /emp/:empId/proj/:projId | POST | yes | create | add employee to project |
+| /emp/:empId/proj/:projId | DELETE | yes | delete | delete employee from project  |
 
 ### Rank handling
 

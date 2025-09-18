@@ -2,17 +2,9 @@ import { DataTypes } from 'sequelize'
 import sequelize from '../database/database.js'
 
 const Employee = sequelize.define('employee', {
-    id: { 
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-    },
-    name: { type: DataTypes.STRING,  allowNull: false  }
-})
-
-
-sequelize.sync({
-    force: false
+    name: { type: DataTypes.STRING,  allowNull: false  },
+    city: { type: DataTypes.STRING,  allowNull: false  },
+    salary: { type: DataTypes.INTEGER,  allowNull: true  },
 })
 
 export default Employee

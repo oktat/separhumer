@@ -79,6 +79,7 @@ const UserController = {
         const newUser = {
             name: req.body.name,
             email: req.body.email,
+            roleId: req.body.roleId || null,
             password: bcrypt.hashSync(req.body.password)
         }        
         const userData = await User.create(newUser)
@@ -96,16 +97,12 @@ const UserController = {
                 clientError = true
                 throw new Error('Error! Bad request data!')
             }
-            if(req.body.password != req.body.password_confirmation) {
-                clientError = true
-                throw new Error('Error! The two password is not same!')
-            }
             const user = await User.findOne({
-                where: { name: req.body.name }
+                where: { id: req.params.id }
             })
-            if(user) {
+            if(!user) {
                 clientError = true
-                throw new Error('Error! User already exists: ' + user.name)
+                throw new Error('Error! User not found: ' + req.body.name)
             }            
             await UserController.tryUpdate(req, res)
         }catch(error) {
@@ -126,6 +123,11 @@ const UserController = {
         }
     },
     async tryUpdate(req, res) {
+        const newUserData = {
+            name: req.body.name,
+            email: req.body.email,
+            roleId: req.body.roleId || null
+        }
         const recordNumber = await User.update(req.body, {
             where: { id: req.params.id }
         })
@@ -140,10 +142,60 @@ const UserController = {
         })
     },
     async updatePassword(req, res) {
+        var clientError = false;
+        try {
+            if(!req.body.password ||
+                !req.body.password_confirmation) {
+                clientError = true
+                throw new Error('Error! Bad request data!')
+            }
+            if(req.body.password != req.body.password_confirmation) {
+                clientError = true
+                throw new Error('Error! The two password is not same!')
+            }
+            const user = await User.findOne({
+                where: { id: req.params.id }
+            })
+            if(!user) {
+                clientError = true
+                throw new Error('Error! User not found: ' + req.body.name)
+            }            
+            await UserController.tryUpdatePassword(req, res)
+        }catch(error) {
+            let actualMessage = '';
+            if(error.message == 'Fail! Record not found!') {
+                actualMessage = error.message
+                res.status(404)
+            }else {
+                res.status(500)
+                actualMessage = 'Fail! The query is failed!'
+            }
+            
+            res.json({
+                success: false,
+                message: actualMessage,
+                error: error.message
+            })
+        }
         
     },
     async tryUpdatePassword(req, res) {
-        
+        const newPassword = {
+            password: bcrypt.hashSync(req.body.password)
+        }
+        const recordNumber = await User.update(newPassword, {
+            where: { id: req.params.id }
+        })
+        if(recordNumber == 0) {
+            throw new Error('Fail! Record not found!')
+        }
+        const user = await User.findByPk(req.params.id)
+        res.status(200)
+        res.json({
+            success: true,
+            data: user,
+            message: 'Success! Password updated!'
+        })        
     },
     async destroy(req, res) {
         try {

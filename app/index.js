@@ -4,6 +4,12 @@ import cors from 'cors'
 import fs from 'fs'
 import router from './routes/api.js'
 import { readJson } from '../tools/readjson.js'
+import db from './models/relations.js'
+import sequelize from './database/database.js'
+
+sequelize.sync({
+    alter: false
+})
 
 const config = await readJson('config/default.json')
 

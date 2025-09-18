@@ -13,7 +13,9 @@ const RankController = {
         }
     },
     async tryIndex(req, res) {
-        const ranks = await Rank.findAll()
+        const ranks = await Rank.findAll({
+            attributes: ['id', 'name']
+        })
         res.status(200)
         res.json({
             success: true,

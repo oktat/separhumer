@@ -1,4 +1,5 @@
 import Employee from '../models/employee.js'
+import Rank from '../models/rank.js'
 
 const EmployeeController = {
     async index(req, res) {
@@ -13,7 +14,13 @@ const EmployeeController = {
         }
     },
     async tryIndex(req, res) {
-        const employees = await Employee.findAll()
+        const employees = await Employee.findAll({
+            attributes: ['id', 'name'],
+            include: {
+                model: Rank,
+                attributes: ['id', 'name']
+            }
+        })
         res.status(200)
         res.json({
             success: true,
@@ -27,12 +34,20 @@ const EmployeeController = {
             res.status(500)
             res.json({
                 success: false,
-                message: 'Error! The query is failed!'
+                message: 'Error! The query is failed!',
+                error: error.message
             })
         }
     },
     async tryShow(req, res) {
-        const employee = await Employee.findByPk(req.params.id)
+        const employee = await Employee.findByPk(req.params.id, {
+                attributes: ['id', 'name'],
+                include: {
+                    model: Rank,
+                    attributes: ['id', 'name']
+                }
+            }
+        )
         res.status(200)
         res.json({
             success: true,
@@ -46,7 +61,8 @@ const EmployeeController = {
             res.status(500)
             res.json({
                 success: false,
-                message: 'Error! The query is failed!'
+                message: 'Error! The query is failed!',
+                error: error.message
             })
         }
     },
@@ -73,7 +89,8 @@ const EmployeeController = {
             
             res.json({
                 success: false,
-                message: actualMessage
+                message: actualMessage,
+                error: error.message
             })
         }
     },
@@ -98,7 +115,8 @@ const EmployeeController = {
             res.status(500)
             res.json({
                 success: false,
-                message: 'Error! The query is failed!'
+                message: 'Error! The query is failed!',
+                error: error.message
             })
         }
     },
@@ -110,6 +128,50 @@ const EmployeeController = {
         res.json({
             success: true,
             data: employee
+        })
+    },
+    async addProject(req, res) {
+        try {
+            await EmployeeController.tryAddProject(req, res)
+        }catch(error) {
+            res.status(500)
+            res.json({
+                success: false,
+                message: 'Error! The query is failed!',
+                error: error.message
+            })
+        }
+    },
+    async tryAddProject(req, res) {
+        const employee = await Employee.findByPk(req.params.empId)
+        const result = await employee.addProject(req.params.projId)
+        res.status(200)
+        res.json({
+            success: true,
+            data: result,
+            message: 'Success! Project added to employee!'
+        })
+    },
+    async delProject(req, res) {
+        try {
+            await EmployeeController.tryDelProject(req, res)
+        }catch(error) {
+            res.status(500)
+            res.json({
+                success: false,
+                message: 'Error! The query is failed!',
+                error: error.message
+            })
+        }
+    },
+    async tryDelProject(req, res) {
+        const employee = await Employee.findByPk(req.params.empId)
+        const result = await employee.removeProject(req.params.projId)
+        res.status(200)
+        res.json({
+            success: true,
+            data: result,
+            message: 'Success! Project deleted from employee!'
         })
     }
 }
